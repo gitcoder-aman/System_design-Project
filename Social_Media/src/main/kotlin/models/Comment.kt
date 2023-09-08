@@ -1,26 +1,24 @@
-package model
+package models
 
-class UserModel() {
-
-    var userId:String?=null
+class Comment {
+    var commentId:String?=null
         get() = field
         set(value){
             field = value
         }
-    var userName:String?=null
+    var userCommented:String?=null
         get() = field
         set(value){
             field = value
         }
-    var phoneNumber:String?=null
+    var message:String?=null
         get() = field
         set(value){
             field = value
         }
-    var followUser:MutableSet<String>? = null
+    var timestamp:String?=null
         get() = field
         set(value){
             field = value
         }
-
 }

@@ -28,16 +28,16 @@ class UserService {
         private val userDao: Dao = Dao.getInstance()
 
         //signUp User
-        public fun signupUser(userName:String):UserModel{
+         fun signupUser(userName:String): String {
             if(userName.isEmpty()){
-                return throw CustomException("UserName is null")
+                 throw CustomException("UserName is null")
             }
             return userDao.signupUser(userName)
         }
         //login user
-        public fun loginUser(userName:String):UserModel{
+         fun loginUser(userName:String):UserModel{
             if(userName.isEmpty()){
-                return throw CustomException("UserName is null")
+                return throw CustomException("user name can't be empty")
             }
             return userDao.loginUser(userName)
         }

@@ -5,6 +5,7 @@ import model.PostModel
 import model.UserModel
 import utils.IdGenerator
 import java.sql.Timestamp
+import kotlin.math.sign
 
 class Dao {
     private fun Dao() {
@@ -27,35 +28,35 @@ class Dao {
         }
     }
 
-    private val loginMap: HashMap<String, UserModel> = HashMap() //userName,UserModel
+    private val loginMap: HashMap<String, UserModel> = HashMap() //phoneNumber,UserModel
     private var loggedInUser: UserModel? = null
 
     private val postMap: HashMap<String, PostModel> = HashMap() //postId,PostModel
     private val postIdList: ArrayList<String> = ArrayList() //all post id list for showing all post with help of post id
 
-    fun signupUser(userName: String): UserModel {
+    fun signupUser(userName: String): String {
 
         if (loginMap.containsKey(userName)) {
-            return throw CustomException("User is already created! try to new user")
+             throw CustomException("User is already created! try to new user")
         }
 
         val signUpModel = UserModel()
+        signUpModel.userId = IdGenerator.getUserId()
         signUpModel.userName = userName
 
         loginMap[userName] = signUpModel
         println("Successful create this user with User Id " + signUpModel.userName)
-        return signUpModel
+        return signUpModel.userId!!
     }
 
     fun loginUser(userName: String): UserModel {
         if (!loginMap.containsKey(userName)) {
             return throw CustomException("User not found!")
         }
-        var userModel: UserModel = loginMap[userName]!!
-        loggedInUser = userModel
-        println("$userName user login successfully")
+        loggedInUser = loginMap[userName]!!
+        println("${loggedInUser?.userName} user login successfully")
         allPostShow()
-        return userModel
+        return loggedInUser!!
     }
 
     fun allPostShow() {
@@ -72,10 +73,10 @@ class Dao {
                 //all post show particular post Id
                 for (i in postMap[i]?.replyPost!!) {
 
-                    println("         "+i.postId)
-                    println("         "+i.userName)
-                    println("         "+i.post)
-                    println("         "+i.timestamp)
+                    println("         " + i.postId)
+                    println("         " + i.userName)
+                    println("         " + i.post)
+                    println("         " + i.timestamp)
                 }
 //                for(i in postMap[i].replyPost)
             }
@@ -151,6 +152,17 @@ class Dao {
             postMap[postId]?.replyPost?.add(postModel) //multiple comment store of one post id
 
             println("you replied to this postId $postId")
+        }
+    }
+
+    fun followUserShow() {
+        if (loggedInUser?.followUser?.isEmpty() == true) {
+            println("No any one you follow user")
+        } else {
+            println("You are following these all Users")
+            for (followUser in loggedInUser?.followUser!!) {
+                println(followUser)
+            }
         }
     }
 }

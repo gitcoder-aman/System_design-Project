@@ -65,4 +65,10 @@ class PostService {
     fun allPostShow(){
         postDao.allPostShow()
     }
+
+    fun followUserShow() {
+
+            postDao.followUserShow()
+
+    }
 }

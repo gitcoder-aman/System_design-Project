@@ -18,13 +18,13 @@ fun main(args: Array<String>) {
 
         if (input.equals("signup")) {
             println("Enter user name for signup")
-            val signupInput = readlnOrNull()
-            val user1: UserModel = userService.signupUser(signupInput!!)
-            println("UserName : " + user1.userName)
+            val userName = readlnOrNull()
+            val userId: String = userService.signupUser(userName!!)
+            println("UserName : $userId")
         } else if (input.equals("login")) {
             println("Enter user name for login")
-            val loginInput = readlnOrNull()
-            val user2: UserModel = userService.loginUser(loginInput!!)
+            val userName = readlnOrNull()
+            val user2: UserModel = userService.loginUser(userName!!)
 //            println("UserName : " + user2.userName)
         } else if (input.equals("post")) {
             println("Enter any post")
@@ -49,6 +49,8 @@ fun main(args: Array<String>) {
             postService?.replyUser(postId,replyPost)
         }else if(input.equals("shownewsfeed")){
             postService?.allPostShow()
+        }else if(input.equals("showfollow")){
+            postService?.followUserShow()
         }else{
             input.equals("logout")
         }
